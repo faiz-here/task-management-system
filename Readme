@@ -1,0 +1,158 @@
+# Task Management System
+
+This is a **Task Scheduling and Management System** built with **Node.js**, **Express**, and **MongoDB**. It allows users to create, prioritize, reprioritize, and execute tasks in real-time. The system is designed to handle dynamic task management efficiently and stores task data persistently in MongoDB.
+
+## Features
+
+- **Task Creation**: Add tasks with metadata such as `name`, `priority`, `status`, and `executionTime`.
+- **Task Prioritization**: Dynamically set or update task priority. Tasks with higher priority are executed first.
+- **Reprioritization**: Reprioritize tasks after creation, allowing users to adjust task priorities based on changing requirements.
+- **Task Execution**: Execute tasks based on their priority and mark them as `completed` once done.
+- **Persistent Storage**: All tasks are stored in a MongoDB database, ensuring that tasks are not lost after server restarts.
+
+## Tech Stack
+
+- **Node.js**: Backend server runtime.
+- **Express.js**: Web framework for handling API requests.
+- **MongoDB**: NoSQL database for persistent storage of tasks.
+- **Mongoose**: ODM for MongoDB, handling data models and interactions with the database.
+- **Postman**: Postman offers a set of tools to help with the API lifecycle, including design, testing, documentation, mocking, and discovery..
+
+## Installation
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/faiz-here/task-management-system.git
+
+2. **Navigate to the project directory**:
+
+3. **run these command**--
+cd task-management-system
+npm install nodemon -g
+npm install
+
+4. **insure, you have mongodb installed into your pc**
+
+5. **Start the server**:
+npm start
+
+By default, the server will run on http://localhost:3000
+
+6. **use Postman for checking the endpoints**
+
+API Endpoints
+1. Create a Task
+Endpoint: POST /tasks
+
+Description: Creates a new task with a name and an optional priority. the range of the priority is from 1 to 5, by default it will take as 5. 
+
+Request Body:
+
+json
+{
+  "name": "Task 1",
+  "priority": 1
+}
+Response:
+
+json
+{
+  "_id": "taskId",
+  "name": "Task 1",
+  "priority": 1,
+  "status": "pending",
+  "executionTime": "2024-10-19T14:55:44.877Z"
+}
+2. Get All Tasks with the status pending (Sorted by Priority)
+Endpoint: GET /tasks
+
+Description: Retrieves all tasks, sorted by priority.
+
+Response:
+
+json
+[
+  {
+    "_id": "taskId",
+    "name": "Task 2",
+    "priority": 1,
+    "status": "pending",
+    "executionTime": "2024-10-19T14:55:44.877Z"
+  },
+  {
+    "_id": "taskId2",
+    "name": "Task 1",
+    "priority": 2,
+    "status": "pending",
+    "executionTime": "2024-10-19T15:00:00.000Z"
+  }
+]
+3. Reprioritize a Task
+Endpoint: PATCH /tasks/:id/reprioritize
+
+Description: Update the priority of a specific task.
+
+Request Parameters:
+
+id: The unique task ID to update.
+Request Body:
+
+json
+{
+  "priority": 2
+}
+Response:
+
+json
+{
+  "_id": "taskId",
+  "name": "Task 1",
+  "priority": 2,
+  "status": "pending",
+  "executionTime": "2024-10-19T14:55:44.877Z"
+}
+4. Mark a Task as Completed
+Endpoint: PATCH /tasks/:id/complete
+
+Description: Mark a specific task as completed.
+
+Request Parameters:
+
+id: The unique task ID to mark as complete.
+Response:
+
+json
+{
+  "_id": "taskId",
+  "name": "Task 1",
+  "priority": 1,
+  "status": "completed",
+  "executionTime": "2024-10-19T14:55:44.877Z"
+}
+
+5. Delete a Task
+Endpoint: DELETE /tasks/:id/deleteTask
+
+json
+{
+    "succes": true,
+    "message": "task has been deleted",
+    "task": {
+        "_id": "taskId1",
+        "name": "task1",
+        "priority": 5,
+        "status": "pending",
+        "executionTime": "2024-10-21T14:43:08.430Z",
+        "__v": 0
+    }
+}
+
+Configuration
+By default, the app uses the following configuration:
+
+Port: 3000
+MongoDB Connection: mongodb://127.0.0.1:27017/task-manager
+To change the configuration, you can modify the server.js file or use environment variables.
+
+
